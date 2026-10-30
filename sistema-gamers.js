@@ -12,7 +12,8 @@ function mostrarMenu() {
     console.log("3 - Mostrar equipe");
     console.log("4 - Cálculo da Média da Equipe");
     console.log("5 - Buscar jogador");
-    console.log("6 - Sair");
+    console.log("6 - Atualizar Pontos");
+    console.log("7 - Sair");
 }
 
 function mostrarEquipe() {
@@ -117,6 +118,43 @@ function buscarJogador() {
     }
 }
 
+function atualizarPontuacao() {
+    if (time.length === 0) {
+        console.log("Nenhum jogador cadastrado.");
+        return;
+    }
+
+    console.log("--- ATUALIZAÇÃO DE RANKING ---");
+
+    let nomeDesejado = prompt("Qual jogador deseja atualizar? ");
+
+    let encontrou = false;
+
+    for (let i = 0; i < time.length; i++) {
+        let jogadorAtual = time[i];
+
+        if (jogadorAtual.nome === nomeDesejado) {
+            let pontosNovos = Number(prompt("Quantos pontos ele ganhou hoje? "));
+
+            if (isNaN(pontosNovos)) {
+                console.log("Pontuação inválida!");
+                return;
+            }
+
+            jogadorAtual.pontuacao += pontosNovos;
+
+            console.log("SUCESSO! A pontuação de " + jogadorAtual.nome + " subiu para " + jogadorAtual.pontuacao + " pontos!");
+
+            encontrou = true;
+            break;
+        }
+    }
+
+    if (encontrou === false) {
+        console.log("O jogador " + nomeDesejado + " não faz parte da nossa equipe.");
+    }
+}
+
 while (continuar === true) {
     mostrarMenu();
     let opcao = prompt("Digite sua opção: ");
@@ -132,6 +170,8 @@ while (continuar === true) {
     } else if (opcao === "5") {
         buscarJogador();
     } else if (opcao === "6") {
+        atualizarPontuacao();
+    } else if (opcao === "7") {
         continuar = false;
     } else {
         console.log("Opção inválida, digite outra opção...");
