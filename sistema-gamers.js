@@ -1,3 +1,4 @@
+
 const prompt = require("prompt-sync")();
 
 let time = [];
@@ -10,7 +11,8 @@ function mostrarMenu() {
     console.log("2 - Deletar");
     console.log("3 - Mostrar equipe");
     console.log("4 - Cálculo da Média da Equipe");
-    console.log("5 - Sair");
+    console.log("5 - Buscar jogador");
+    console.log("6 - Sair");
 }
 
 function mostrarEquipe() {
@@ -60,14 +62,14 @@ function deletarJogador() {
         }
     }
 
-    if(indexDeletado === -1) {
+    if (indexDeletado === -1) {
         console.log("Jogador não encontrado.");
         return;
     }
 
     time.splice(indexDeletado, 1);
     console.log("Jogador deletado com sucesso!");
-}   
+}
 
 function calculoDaMedia() {
     if (time.length === 0) {
@@ -86,7 +88,36 @@ function calculoDaMedia() {
     console.log("O time possui uma pontuação média de: ", mediaPontos);
 }
 
-while(continuar === true) {
+function buscarJogador() {
+    if (time.length === 0) {
+        console.log("Nenhum jogador cadastrado.");
+        return;
+    }
+
+    let nomeDesejado = prompt("Digite o nome do jogador que deseja buscar: ");
+
+    console.log("Buscando por: " + nomeDesejado + "...");
+
+    let encontrou = false;
+
+    for (let i = 0; i < time.length; i++) {
+        let jogadorAtual = time[i];
+
+        if (jogadorAtual.nome === nomeDesejado) {
+            console.log("JOGADOR ENCONTRADO!");
+            console.log("Nome: " + jogadorAtual.nome + " | Função: " + jogadorAtual.funcao + " | Pontos: " + jogadorAtual.pontuacao);
+
+            encontrou = true;
+            break;
+        }
+    }
+
+    if (encontrou === false) {
+        console.log("O jogador " + nomeDesejado + " não faz parte da nossa equipe.");
+    }
+}
+
+while (continuar === true) {
     mostrarMenu();
     let opcao = prompt("Digite sua opção: ");
 
@@ -99,10 +130,10 @@ while(continuar === true) {
     } else if (opcao === "4") {
         calculoDaMedia();
     } else if (opcao === "5") {
+        buscarJogador();
+    } else if (opcao === "6") {
         continuar = false;
-    } 
-    else {
+    } else {
         console.log("Opção inválida, digite outra opção...");
     }
 }
-
